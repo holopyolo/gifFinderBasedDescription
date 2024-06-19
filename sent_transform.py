@@ -67,12 +67,6 @@ class Searcher:
         print(self.loaded_labels)
         print(inds)
         return relev_docs
-
-    
-
-
-    
-
     
 
 
