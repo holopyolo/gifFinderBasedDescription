@@ -14,21 +14,19 @@ def get_gifs_from_backend(uploaded_gif, gif_description):
     files = {
         "uploaded_gif": uploaded_gif
     }
-    response = requests.post("http://127.0.0.9:8080/endpoint", data=data, files=files)
+    response = requests.post("http://127.0.0.1:5000/endpoint", data=data, files=files)
     res = response.json().get("res", "false")
     return res
 
 def find_sim(text):
     data = {'text': text}
-    response = requests.post("http://127.0.0.9:8080/find", data=data)
+    response = requests.post("http://127.0.0.1:5000/find", data=data)
     gifs = response.json().get("videos", [])
     return gifs
 
 def clear_inputs():
     st.session_state["fl_upload"] = None
     st.session_state["desc_gif"] = ""
-
-
 
 text_input = st.text_input("send text prep:")
 
@@ -49,6 +47,6 @@ elif st.button('find'):
         try:
             vid_relev = find_sim(text_input)
             for pot_video in vid_relev:
-                st.video(os.path.join(path_vid, pot_video))
+                st.video(os.path.join(path_vid, pot_video), autoplay=True, muted=True)
         except(Exception) as ex:
             print(ex)
